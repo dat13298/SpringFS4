@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmls:th="" xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Event</title>
+</head>
+<body>
+    <h2>Add Event</h2>
+    <form th:action="@{/save-event}" th:object="${event}" method="post">
+        <label for="name">Name:</label>
+        <input id="name" type="text" th:field="*{name}" required />
+        <br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" th:field="*{date}" required />
+        <br>
+        <label for="venue">Venue:</label>
+        <input id="venue" type="text" th:field="*{venue}" required />
+        <br>
+        <label for="seats">Seats Available:</label>
+        <input id="seats" type="number" th:field="*{seatsAvailable}" min="0" required />
+        <br>
+        <input type="submit"/>
+    </form>
+    <a href="/events">Back to Events</a>
+</body>
+</html>
