@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en" xmls:th xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Event List</title>
+  <style>
+    .btn {
+      padding: 8px 12px;
+      margin: 2px;
+      text-decoration: none;
+      border: 1px solid #007bff;
+      color: #007bff;
+      border-radius: 5px;
+    }
+    .btn.active {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <caption>Event List</caption>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Venue</th>
+      <th>Seats</th>
+      <th>Action</th>
+    </tr>
+    <tr th:each="event : ${events}">
+      <td th:text="${event.getId()}"></td>
+      <td th:text="${event.getName()}"></td>
+      <td th:text="${event.getDate()}"></td>
+      <td th:text="${event.getVenue()}"></td>
+      <td th:text="${event.getSeatsAvailable()}"></td>
+      <td><a th:href="@{/events/delete/{id}(id=${event.getId()})}">Delete</a></td>
+    </tr>
+  </table>
+  <!-- Pagination -->
+  <div th:if="${events.totalPages > 1}">
+
+    <a th:if="${events.number > 0}"
+       th:href="@{/events(page=${events.number - 1}, size=5)}"
+       class="btn">Prev</a>
+
+    <span th:each="i : ${#numbers.sequence(0, events.totalPages - 1)}">
+        <a th:href="@{/events(page=${i}, size=5)}"
+           th:text="${i+1}"
+           th:classappend="${i == events.number} ? 'active' : ''"
+           class="btn"></a>
+    </span>
+
+    <a th:if="${events.number < events.totalPages - 1}"
+       th:href="@{/events(page=${events.number + 1}, size=5)}"
+       class="btn">Next</a>
+  </div>
+
+</body>
+</html>
