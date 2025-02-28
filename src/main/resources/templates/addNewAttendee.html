@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Attendee</title>
+  <style>
+    .error{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <form th:action="@{/attendees/save-attendee}" th:object="${attendee}" method="post">
+    <table>
+      <caption>Add New Attendee</caption>
+      <tr>
+        <td><label for="name">Name:</label></td>
+        <td>
+          <input id="name" th:field="*{name}" type="text"/>
+          <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="email">Email:</label></td>
+        <td>
+          <input id="email" th:field="*{email}" type="email" required/>
+          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="event">Event:</label></td>
+        <td>
+          <select id="event" th:field="*{event}">
+            <option value="">-- Select Event --</option>
+            <option th:each="event : ${events}"
+                    th:text="${event.getName() + ' (' + event.getDate() + ')'}"
+                    th:value="${event.getId()}">
+            </option>
+          </select>
+          <span th:if="${#fields.hasErrors('event')}" th:errors="*{event}" class="error"></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" value="Add Attendee"/>
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+</html>
