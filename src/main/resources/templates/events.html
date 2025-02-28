@@ -40,6 +40,7 @@
       <td><a th:href="@{/events/delete/{id}(id=${event.getId()})}">Delete</a></td>
     </tr>
   </table>
+  <a th:href="@{/events/add-event}">Add event</a>
   <!-- Pagination -->
   <div th:if="${events.totalPages > 1}">
 
