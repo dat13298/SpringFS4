@@ -18,14 +18,18 @@ public class Attendee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
+    @NotNull(message = "Event must be selected")
     private Event event;
+
     @Column(nullable = false, length = 50)
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
+
     @Column(nullable = false, length = 50, unique = true)
-    @NotNull
-    @Email
-    @Size(max = 50)
+    @Email(message = "Invalid email format")
+    @Size(max = 50, min = 1, message = "Email must be between 3 and 50 characters")
     private String email;
 }
