@@ -1,5 +1,6 @@
 package com.aptech.springfs4.entity.event;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -48,16 +50,16 @@ public class EventController {
     }
 
     @PostMapping("/save-event")
-    public String saveEvent(@ModelAttribute("event") Event event) {
-        if (eventService.findEventById(event.getId()) != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Event already exists");
+    public String saveEvent(@ModelAttribute("event") @Valid Event event,
+                            BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "addEvent";
         }
-        if (event.getSeatsAvailable() <= 0) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "No seats available");
+        if(eventService.findEventById(event.getId()) != null) {
+            result.rejectValue("id", "duplicate", "Event already exists");
+            return "addEvent";
         }
-        if (event.getDate().before(new Date())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Date is after date");
-        }
+
         eventService.save(event);
         return "redirect:/events";
     }
