@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendee List</title>
+</head>
+<body>
+<table>
+  <a th:href="@{/attendees/add-new}">Add new</a>
+  <caption>Attendee List</caption>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  <tr th:each="attendee : ${attendees}">
+    <td th:text="${attendee.id}"></td>
+    <td th:text="${attendee.name}"></td>
+    <td th:text="${attendee.email}"></td>
+  </tr>
+</table>
+</body>
+</html>
