@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class Event {
 
     @Column(nullable = false)
     @Future(message = "The event date must be in the future")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @Column(nullable = false, length = 50)
